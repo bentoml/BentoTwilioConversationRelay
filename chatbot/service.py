@@ -138,27 +138,28 @@ class TwilioChatBot:
             input_buffer = []
             llm_task = None
 
+            async def stop_llm_task():
+                nonlocal llm_task
+                if llm_task:
+                    llm_task.cancel()
+                    try:
+                        await llm_task
+                    except asyncio.CancelledError:
+                        pass
+                    llm_task = None
+
             while True:
                 data = await queue.get()
                 if data["type"] == "prompt":
                     input_buffer.append(data["voicePrompt"])
-                    if not data["last"]:
-                        continue
+                    if data["last"]:
+                        message = " ".join(input_buffer)
+                        input_buffer = []
+                        await stop_llm_task()
+                        llm_task = asyncio.create_task(llm_request(message))
 
                 elif data["type"] == "interrupt":
                     input_buffer = []
-                    if llm_task:
-                        llm_task.cancel()
-                        try:
-                            await llm_task
-                        except asyncio.CancelledError:
-                            pass
-                        llm_task = None
-                else:
-                    continue
+                    await stop_llm_task()
 
-                message = " ".join(input_buffer)
-                input_buffer = []
-                llm_task = asyncio.create_task(llm_request(message))
-                
         await asyncio.gather(read_from_socket(websocket), get_data_and_process())
