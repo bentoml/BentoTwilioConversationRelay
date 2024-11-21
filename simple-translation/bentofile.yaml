@@ -1,0 +1,15 @@
+service: "service.py:TwilioTranslateBot"
+labels:
+  owner: bentoml-team
+  project: gallery
+include:
+  - "*.py"
+python:
+  requirements_txt: requirements.txt
+docker:
+  python_version: "3.11"
+  system_packages:
+    - ffmpeg
+envs:
+  - name: LD_LIBRARY_PATH
+    value: "/app/.venv/lib/python3.11/site-packages/nvidia/cublas/lib:/app/.venv/lib/python3.11/site-packages/nvidia/cudnn/lib:/usr/local/lib/python3.11/site-packages/nvidia/cublas/lib:/usr/local/lib/python3.11/site-packages/nvidia/cudnn/lib"
