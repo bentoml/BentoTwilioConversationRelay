@@ -40,7 +40,7 @@ sudo apt-get update && sudo apt-get install ffmpeg
 
 Run it locally:
 
-```
+```bash
 bentoml serve .
 ```
 
@@ -60,13 +60,13 @@ After the chatbot is ready, you can deploy it to BentoCloud for better managemen
 
 Make sure you have [logged in to BentoCloud](https://docs.bentoml.com/en/latest/scale-with-bentocloud/manage-api-tokens.html#log-in-to-bentocloud-using-the-bentoml-cli).
 
-```
+```bash
 bentoml cloud login
 ```
 
 Deploy it to BentoCloud.
 
-```
+```bash
 bentoml deploy .
 ```
 
