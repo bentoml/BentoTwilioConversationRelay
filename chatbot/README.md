@@ -2,20 +2,32 @@
     <h1 align="center">Building a Voice Chatbot with an Open-Source LLM</h1>
 </div>
 
-This repository demonstrates how to build a voice chatbot using an open-source Large Language Model (LLM). It leverages Twilio for real-time voice interactions and BentoML for serving and deployment.
+This repository demonstrates how to build a voice chatbot using an open-source Large Language Model (LLM). It leverages Twilio for real-time voice interactions and BentoML for deploying and serving the model.
 
-Key features:
-
-- Uses Twilio for real-time speech-to-text and text-to-speech conversion
-- Allows users to interrupt AI responses and adjust the conversation dynamically
-- Uses the Llama-3.1-70B-Instruct model
-- Exposes two key endpoints:
-  - `/chat/start_call`: An HTTP endpoint for initiating Twilio voice calls and generating TwiML responses.
-  - `/chat/ws`: A WebSocket endpoint for real-time bidirectional communication, supporting voice streaming.
-
-This example is designed to be customizable and you can extend it by adding more voice agent features.
+This example uses the Llama-3.1-70B-Instruct model. It is designed to be customizable and you can extend it by adding more features such as RAG.
 
 See [here](https://docs.bentoml.com/en/latest/examples/overview.html) for a full list of BentoML example projects.
+
+## Architecture
+
+Twilio handles:
+
+- Voice transport (incoming and outgoing)
+- **STT:** Converts user voice inputs into text and sends them to the BentoML Service.
+- **TTS:** Converts text responses streamed from the BentoML Service into voice and sends them back to the user.
+- Detects user interruptions during LLM responses and sends interruption signals to BentoML.
+
+BentoML handles:
+
+- Processes text inputs from Twilio and streams LLM responses back to Twilio in a producer-consumer pattern.
+- Uses a raw vLLM async engine for better latency and the ability to cancel LLM streams (instead of relying on the OpenAI API).
+- Handles user interruptions by canceling the current LLM stream immediately.
+- Maintains consistent message history for seamless interactions.
+
+This project exposes two key endpoints:
+
+- `/chat/start_call`: An HTTP endpoint for initiating Twilio voice calls and generating TwiML responses.
+- `/chat/ws`: A WebSocket endpoint for real-time bidirectional communication, supporting voice streaming.
 
 ## Prerequisites
 
