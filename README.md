@@ -34,8 +34,8 @@ This project exposes two key endpoints:
 Clone the repository and install the required dependencies.
 
 ```bash
-git clone https://github.com/bentoml/BentoTwilioRelay.git
-cd BentoTwilioRelay/chatbot
+git clone https://github.com/bentoml/BentoTwilioConversationRelay.git
+cd BentoTwilioConversationRelay
 
 # Recommend Python 3.11
 pip install -r requirements.txt
