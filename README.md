@@ -10,6 +10,8 @@ See [here](https://docs.bentoml.com/en/latest/examples/overview.html) for a fu
 
 ## Architecture
 
+![architecture](twilio-conversationrelay-bentoml.png)
+
 Twilio handles:
 
 - Voice transport (incoming and outgoing)
