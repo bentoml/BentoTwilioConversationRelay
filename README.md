@@ -6,6 +6,8 @@ This repository demonstrates how to build a voice chatbot using an open-source L
 
 This example uses the Llama-3.1-70B-Instruct model. It is designed to be customizable and you can extend it by adding more features such as RAG.
 
+[![Read the Blog Post](https://img.shields.io/badge/Read%20the%20Blog%20Post-d0bfff?style=for-the-badge)](https://www.twilio.com/en-us/blog/voice-application-conversationrelay-bentoml)
+
 See [here](https://docs.bentoml.com/en/latest/examples/overview.html) for a full list of BentoML example projects.
 
 ## Architecture
